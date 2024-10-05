@@ -306,3 +306,28 @@ document
 			window.uploadedFileExtension = file.name.split(".").pop();
 		}
 	});
+
+	// Function to download the modified image
+document.getElementById("download-img").addEventListener("click", function () {
+	const canvas = document.createElement("canvas");
+	const ctx = canvas.getContext("2d");
+	const img = document.getElementById("currentImage");
+
+	// Set the canvas size to the image's size
+	canvas.width = img.width;
+	canvas.height = img.height;
+
+	// Apply the filters from the current image to the canvas context
+	ctx.filter = getComputedStyle(img).getPropertyValue("filter");
+
+	// Draw the image onto the canvas
+	ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+	// Convert the canvas content to a data URL (image format)
+	const downloadLink = document.createElement("a");
+	downloadLink.href = canvas.toDataURL(`image/${window.uploadedFileExtension === "jpg" ? "jpeg" : window.uploadedFileExtension}`);
+	downloadLink.download = `modified-image.${window.uploadedFileExtension}`;
+
+	// Trigger the download
+	downloadLink.click();
+});
