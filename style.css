@@ -273,3 +273,7 @@ input {
       border-radius: 10px;
     }
   }
+
+  .font h5 {
+    font-family: Rubik Mono One;
+  }
